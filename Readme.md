@@ -23,6 +23,7 @@ Commands:
 * `M-q` quit
 * `M-h` select which headers to display
 * `M-c` toggle colour on/off
+* `M-r` refresh the list of processes
 * `C-j` scroll the screen down
 * `C-k` scroll the screen up
 
