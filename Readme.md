@@ -34,6 +34,15 @@ This is kind of obnoxious, though. Fortunately, every terminal I have used allow
 (on OSX, I've rebound it to option, so M-k means Option-k).
 
 
+Installation
+------------
+
+This is witten in [Ruby](http://www.ruby-lang.org/), you'll need a Ruby interpreter. Once you have a Ruby interpreter, you should have the `gem` command, which is Ruby's package manager.
+
+    gem install process_manager
+
+You might need to install the ncurses C library on your computer, IDK, it just worked for me, so I haven't had to figure that out yet (if you do, you'll probably also have to reinstall the gem).
+
 License
 -------
 
