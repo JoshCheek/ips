@@ -1,5 +1,5 @@
-Process Manager
-===============
+Interactive Process
+===================
 
 About
 -----
@@ -9,7 +9,7 @@ About
 How often do you wind up slowly building up commands like this?  `ps aux | grep ruby | grep -v grep | awk '{print $2}' | xargs kill -9`
 For me, it's annoyingly too often, and it usually takes experimentation each time to get it right.
 
-Process Manager (binary name: psm) tries to alleviate this pain by catering to this workflow.
+Interactive Process (binary name: ips) tries to alleviate this pain by catering to this workflow.
 
 When you run it, it will list all your processes. As you type, it will dynamically filter down to the processes that match.
 
@@ -39,7 +39,7 @@ Installation
 
 This is witten in [Ruby](http://www.ruby-lang.org/), you'll need a Ruby interpreter. Once you have a Ruby interpreter, you should have the `gem` command, which is Ruby's package manager.
 
-    gem install process_manager
+    gem install interactive_process
 
 You might need to install the ncurses C library on your computer, IDK, it just worked for me, so I haven't had to figure that out yet (if you do, you'll probably also have to reinstall the gem).
 
