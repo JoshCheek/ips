@@ -13,4 +13,10 @@ main = do
 
   rawProcesses <- System.Process.readProcess "ps" ["-eo", "pid user command"] ""
   let pids = Prelude.map extractCommand (Prelude.drop 1 $ Prelude.lines rawProcesses)
+  -- print pids
+  pids <- getPids
   print pids
+
+getPids = do
+  rawPids <- System.Process.readProcess "ps" ["-eo", "pid"] ""
+  return $ Prelude.map (Data.Text.unpack . Data.Text.strip . Data.Text.pack) (Prelude.lines rawPids)
