@@ -3,6 +3,14 @@ import System.Process
 import Data.Text
 
 main = do
-  let strip string = Data.Text.unpack $ Data.Text.strip $ Data.Text.pack string
-  string <- System.Process.readProcess "ps" ["-eo", "pid"] ""
-  print $ Prelude.map strip (Prelude.lines string)
+  let space = Data.Text.pack " "
+  let extractCommand rawProcess = Data.Text.unpack (
+        (\line -> (\(pid, rest) -> (\(user, unstrippedCommand) -> user)
+                                     (breakOn space (Data.Text.strip rest)))
+                    (breakOn space line))
+          (Data.Text.strip
+            (Data.Text.pack rawProcess)))
+
+  rawProcesses <- System.Process.readProcess "ps" ["-eo", "pid user command"] ""
+  let pids = Prelude.map extractCommand (Prelude.drop 1 $ Prelude.lines rawProcesses)
+  print pids
