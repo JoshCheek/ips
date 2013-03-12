@@ -4,8 +4,8 @@ import Data.Text
 
 main = do
   let space = Data.Text.pack " "
-  let extractCommand rawProcess = Data.Text.unpack (
-        (\line -> (\(pid, rest) -> (\(user, unstrippedCommand) -> user)
+  let extractCommand rawProcess = Prelude.map Data.Text.unpack (
+        (\line -> (\(pid, rest) -> (\(user, unstrippedCommand) -> [pid, user, (Data.Text.strip unstrippedCommand)])
                                      (breakOn space (Data.Text.strip rest)))
                     (breakOn space line))
           (Data.Text.strip
