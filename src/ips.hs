@@ -26,6 +26,6 @@ withoutHeader = drop 1
 toProcess rawProcess =
   (\(pid, rest) -> (\(user, unstrippedCommand) -> Process (ProcessPid     $ unpack pid)
                                                           (ProcessUser    $ unpack user)
-                                                          (ProcessCommand $ unpack $ strip unstrippedCommand))
-                               (breakOn space (strip rest)))
-    (breakOn space $ strip $ pack rawProcess)
+                                                          (ProcessCommand $ unpack $ strip unstrippedCommand)
+                   ) (breakOn space (strip rest))
+  ) (breakOn space $ strip $ pack rawProcess)
