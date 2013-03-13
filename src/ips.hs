@@ -1,22 +1,23 @@
 -- $ ps -eo pid
+import Prelude
 import System.Process
-import Data.Text
+import Data.Text (pack, unpack, strip, breakOn)
+-- import qualified Data.Text as T
 
 main = do
-  let space = Data.Text.pack " "
-  let extractCommand rawProcess = Prelude.map Data.Text.unpack (
-        (\line -> (\(pid, rest) -> (\(user, unstrippedCommand) -> [pid, user, (Data.Text.strip unstrippedCommand)])
-                                     (breakOn space (Data.Text.strip rest)))
-                    (breakOn space line))
-          (Data.Text.strip
-            (Data.Text.pack rawProcess)))
-
-  rawProcesses <- System.Process.readProcess "ps" ["-eo", "pid user command"] ""
-  let pids = Prelude.map extractCommand (Prelude.drop 1 $ Prelude.lines rawProcesses)
   -- print pids
-  pids <- getPids
+  pids <- getProcesses
   print pids
 
-getPids = do
-  rawPids <- System.Process.readProcess "ps" ["-eo", "pid"] ""
-  return $ Prelude.map (Data.Text.unpack . Data.Text.strip . Data.Text.pack) (Prelude.lines rawPids)
+getProcesses = do
+  let space = pack " "
+  let toProcess rawProcess = map unpack (
+        (\line -> (\(pid, rest) -> (\(user, unstrippedCommand) -> [pid, user, (strip unstrippedCommand)])
+                                     (breakOn space (strip rest)))
+                    (breakOn space line))
+          (strip
+            (pack rawProcess)))
+
+  rawProcesses <- System.Process.readProcess "ps" ["-eo", "pid user command"] ""
+  let pids = map toProcess (drop 1 $ lines rawProcesses)
+  return pids
