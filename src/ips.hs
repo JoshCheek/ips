@@ -1,11 +1,11 @@
 import Prelude
 import System.Process (readProcess)
 import Data.Text (pack, unpack, strip, breakOn)
--- import qualified Data.Text as T
 
-data ProcessPid     = ProcessPid     String deriving Show
-data ProcessUser    = ProcessUser    String deriving Show
-data ProcessCommand = ProcessCommand String deriving Show
+-- would have rather had these wrap Data.Text, but I'm not smart enough to figure out how
+data ProcessPid     = ProcessPid     String                         deriving Show
+data ProcessUser    = ProcessUser    String                         deriving Show
+data ProcessCommand = ProcessCommand String                         deriving Show
 data Process        = Process ProcessPid ProcessUser ProcessCommand deriving Show
 
 
