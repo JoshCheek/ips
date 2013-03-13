@@ -9,15 +9,17 @@ main = do
   print pids
 
 getProcesses = do
-  let space                = pack " "
-      withoutHeader        = drop 1
-      toProcess rawProcess = map unpack (
-        (\line -> (\(pid, rest) -> (\(user, unstrippedCommand) -> [pid, user, (strip unstrippedCommand)])
-                                     (breakOn space (strip rest)))
-                    (breakOn space line))
-          (strip
-            (pack rawProcess)))
-
+  let withoutHeader = drop 1
   rawProcesses <- System.Process.readProcess "ps" ["-eo", "pid user command"] ""
-  let pids = map toProcess (withoutHeader $ lines rawProcesses)
-  return pids
+  let processes = map toProcess (withoutHeader $ lines rawProcesses)
+  return processes
+
+toProcess rawProcess =
+  map unpack (
+    (\line -> (\(pid, rest) -> (\(user, unstrippedCommand) -> [pid, user, (strip unstrippedCommand)])
+                                 (breakOn space (strip rest)))
+                (breakOn space line))
+      (strip
+        (pack rawProcess)))
+
+space = pack " "
